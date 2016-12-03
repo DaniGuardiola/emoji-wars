@@ -1,3 +1,4 @@
+window.test1 = 'hggngbn';
 var GAME;
 
 var STATUS = {
