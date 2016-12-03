@@ -58,7 +58,7 @@ var BULLET;
         GROUPS.bullets = GAME.add.group();
         GROUPS.bullets.enableBody = true;
 
-        dispatchEvent('ready');
+        setTimeout(function(){ dispatchEvent('ready') }, 1000);
     }
 
     function createObstacles() {
