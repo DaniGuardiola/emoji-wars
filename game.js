@@ -37,6 +37,7 @@ var BULLET;
     	data = data || {};
     	var event = new CustomEvent('game-' + name, { 'detail': data });
     	window.dispatchEvent(event);
+    	console.log('game-' + name);
     }
 
     function preload() {
