@@ -50,6 +50,11 @@ var BULLET;
         GAME.load.image('bu2', 'assets/bu2.png');
         GAME.load.image('bu3', 'assets/bu3.png');
         GAME.load.image('bu4', 'assets/bu4.png');
+        GAME.load.image('bu5', 'assets/bu5.png');
+        GAME.load.image('bu6', 'assets/bu6.png');
+        GAME.load.image('bu7', 'assets/bu7.png');
+        GAME.load.image('bu8', 'assets/bu8.png');
+        GAME.load.image('bu9', 'assets/bu9.png');
     }
 
     function create() {
@@ -121,7 +126,7 @@ var BULLET;
     }
 
     function randomBullet() {
-    	var max = 4;
+    	var max = 9;
         return 'bu' + Math.floor(Math.random() * max + 1);
     }
 
