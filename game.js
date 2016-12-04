@@ -176,17 +176,17 @@ function nextTurn() {
 
      function createNames() {
         var names = GAME.add.group();
-        var y = 35;
+        var y = 40;
         var dis = 35;
         var bdis = 10;
         var bdis2 = 25;
 
         var name1 = names.create(bdis + dis*2, y, 'nm1');
-        var name2 = names.create(GAME.width - bdis - dis*7, y, 'nm2');
-        name1.height = 25;
-        name1.width = 100;
-        name2.height = 25;
-        name2.width = 200;
+        var name2 = names.create(GAME.width - bdis - dis*6+10, y, 'nm2');
+        name1.height = 20;
+        name1.width = 150;
+        name2.height = 18;
+        name2.width = 140;
 
         return names;
     }
