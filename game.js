@@ -33,7 +33,7 @@ function nextTurn() {
     var PLAYER_SIZE = 100;
     var PLAYER_EDGE_DISTANCE = 100;
     var BULLET_SIZE = 80;
-    var BULLET_VELOCITY = 400;
+    var BULLET_VELOCITY = 800;
     var COMPAS_HEIGHT = 490;
     var COMPAS_WIDTH = 300;
     var COMPAS_DISTANCE = 175;
@@ -84,6 +84,8 @@ function nextTurn() {
         GAME.load.image('co1', 'assets/co1.png');
         GAME.load.image('co2', 'assets/co2.png');
         GAME.load.image('li1', 'assets/li1.png');
+        GAME.load.image('nm1', 'assets/nm1.png');
+        GAME.load.image('nm2', 'assets/nm2.png');
     }
 
     function create() {
@@ -97,6 +99,7 @@ function nextTurn() {
         GROUPS.bullets = GAME.add.group();
         GROUPS.lifes = createLifes();
         GROUPS.bullets.enableBody = true;
+        GROUPS.names = createNames();
 
         setTimeout(function() { dispatchEvent('ready') }, 1000);
     }
@@ -171,6 +174,23 @@ function nextTurn() {
         return lifes;
     }
 
+     function createNames() {
+        var names = GAME.add.group();
+        var y = 35;
+        var dis = 35;
+        var bdis = 10;
+        var bdis2 = 25;
+
+        var name1 = names.create(bdis + dis*2, y, 'nm1');
+        var name2 = names.create(GAME.width - bdis - dis*7, y, 'nm2');
+        name1.height = 25;
+        name1.width = 100;
+        name2.height = 25;
+        name2.width = 200;
+
+        return names;
+    }
+
     function createPlayers() {
         var x1 = PLAYER_EDGE_DISTANCE;
         var x2 = GAME.width - PLAYER_EDGE_DISTANCE - PLAYER_SIZE;
@@ -207,6 +227,28 @@ function nextTurn() {
 
             if (!BULLET.alive) console.log('dead');
         }
+
+        GROUPS.obstacles.forEach(function(obstacle) {
+            var x = obstacle.body.velocity.x;
+            var y = obstacle.body.velocity.y;
+
+            var change = 5;
+
+            var xchange = x*change/100;
+            var ychange = y*change/100;
+
+            if((x - xchange) > 0){
+                obstacle.body.velocity.x = x - xchange;  
+            } else {
+                obstacle.body.velocity.x = 0;
+            }
+
+            if ((y - ychange) > 0) {
+                obstacle.body.velocity.y = y - ychange; 
+            } else {
+                obstacle.body.velocity.y = 0;
+            }
+        });
     }
 
     function randomBullet() {
