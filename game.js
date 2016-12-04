@@ -14,13 +14,16 @@ var BULLET;
 var turnIndex = 0;
 var turns = [{
 	n: 1,
-	angle: 45
+	angle: 45,
+	player: 1
 }, {
 	n: 2,
-	angle: -45
+	angle: -45,
+	player: 2
 }, {
 	n: 3,
-	angle: 0
+	angle: 0,
+	player: 1
 }]
 
 function nextTurn() {
@@ -31,12 +34,12 @@ function nextTurn() {
     'use strict';
     // Settings
     var PLAYER_SIZE = 100;
-    var PLAYER_EDGE_DISTANCE = 100;
+    var PLAYER_EDGE_DISTANCE = 85;
     var BULLET_SIZE = 80;
     var BULLET_VELOCITY = 400;
-    var COMPAS_HEIGHT = 490;
-    var COMPAS_WIDTH = 300;
-    var COMPAS_DISTANCE = 175;
+    var COMPAS_HEIGHT = 290;
+    var COMPAS_WIDTH = 155;
+    var COMPAS_DISTANCE = 125;
 
     var GROUPS = {};
 
@@ -129,11 +132,19 @@ function nextTurn() {
         var obstacle7 = obstacles.create(530, 195, 'ob7');
 
         obstacles.forEach(function(obstacle) {
-           obstacle.body.mass = 3;
            obstacle.body.bounce.set(1);
            obstacle.height = 133;
            obstacle.width = 200;
+        	obstacle.body.collideWorldBounds = true;
         });
+
+       obstacle1.body.mass = 2.253;
+       obstacle2.body.mass = 1.957;
+       obstacle3.body.mass = 0.173;
+       obstacle4.body.mass = 1.346;
+       obstacle5.body.mass = 2.572;
+       obstacle6.body.mass = 1.612;
+       obstacle7.body.mass = 0.889;
 
        obstacle6.height =  obstacle7.height =  200;
        obstacle6.width =  obstacle7.width = 200;
@@ -141,7 +152,7 @@ function nextTurn() {
        obstacle5.height = 100;
        obstacle5.width = 100;
 
-        return obstacles;
+       return obstacles;
     }
 
      function createLifes() {
@@ -196,6 +207,11 @@ function nextTurn() {
         if (STATUS.action === 'fire') {
             STATUS.action = 'firing';
             var data = STATUS.data;
+            var turn = nextTurn();
+
+            STATUS.data.angle = turn.angle;
+            STATUS.data.player = turn.player;
+
             fireBullet(STATUS.data.angle);
         }
 
@@ -210,8 +226,9 @@ function nextTurn() {
     }
 
     function randomBullet() {
-    	var max = 9;
-        return 'bu' + Math.floor(Math.random() * max + 1);
+    	var max = 8;
+    	var name = 'bu' + Math.floor(Math.random() * max + 1);
+        return name;
     }
 
     function fireBullet(angle) {
