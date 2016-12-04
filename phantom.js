@@ -101,8 +101,33 @@ function showOptions(msg, options, response) {
   return Promise.resolve(bot.sendMessage(chatId, msg, opt));
 }
 
-function botSendArrows(msg) {
-  return Promise.resolve(bot.sendMessage(chatId, msg));
+
+function showArrows() {
+  var options = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: [
+      [{ text: '⬆️', callback_data: 'Go!' },{ text: '↗️', callback_data: 'Go!' }],
+      [{ text: '🏳', callback_data: 'Go!' },{ text: '➡️', callback_data: 'Go!' }],
+      [{ text: '⬇️', callback_data: 'Go!' },{ text: '↘️', callback_data: 'Go!' }]
+    ]
+  })
+  };
+
+  return Promise.resolve(bot.sendMessage(chatId, "Choose the angle:", options));
+}
+
+function showArrows2() {
+  var options = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: [
+      [{ text: '↖️', callback_data: 'Go!' },{ text: '⬆️', callback_data: 'Go!' }],
+      [{ text: '⬅️', callback_data: 'Go!' },{ text: '🏳', callback_data: 'Go!' }],
+      [{ text: '↙️', callback_data: 'Go!' },{ text: '⬇️', callback_data: 'Go!' }]
+    ]
+  })
+  };
+
+  return Promise.resolve(bot.sendMessage(chatId, "Choose the angle:", options));
 }
 
 function botSendPhoto(name) {
@@ -279,6 +304,7 @@ function launchMock() {
       .then(mockSendInitialImage) // Envía la imagen inicial
       .then(waitPromise2s)
       .then(() => botSendMsg("It's time to dance, @dani.\nWhere will you aim?"))
+      .then(showArrows)
       .then(botNextMsg)
       .then(() => botSendMsg("Good choice, this is the result of your turn:"))
       .then(() => botSendMsg("OK:"))
@@ -287,6 +313,7 @@ function launchMock() {
       .then(() => botSendMsg("Happy? I hope so, because it's time for player 2 to attack!"))
       .then(waitPromise1s)
       .then(() => botSendMsg("@DamianMC, where will you point your weapons?"))
+      .then(showArrows2)
       .then(botNextMsg)
       .then(() => botSendMsg("Good move, let's see the results of your strike:"))
       .then(() => botSendGif('mock/turn2.gif'))
@@ -295,10 +322,6 @@ function launchMock() {
       .then(waitPromise1s)
       .then(() => botSendPhoto('mock/round2.png'));
   // END
-}
-
-function showArrows(options) {
-  return Promise.resolve();
 }
 
 function mockSendInitialImage() {
