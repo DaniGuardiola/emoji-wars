@@ -7,7 +7,7 @@ var token = '304789974:AAELRQVFZdawKJHFENV_9EZ6zrRgbfF_X9A';
 var bot = new TelegramBot(token, { polling: true });
 
 // Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, function (msg, match) {
+bot.onText(/\/start (.+)/, function (msg, match) {
   // 'msg' is the received Message from Telegram
   // 'match' is the result of executing the regexp above on the text content
   // of the message

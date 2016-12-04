@@ -13,9 +13,9 @@ var BULLET;
 (function() {
     'use strict';
     // Settings
-    var PLAYER_SIZE = 100;
-    var PLAYER_EDGE_DISTANCE = 200;
-    var BULLET_SIZE = 30;
+    var PLAYER_SIZE = 200;
+    var PLAYER_EDGE_DISTANCE = 100;
+    var BULLET_SIZE = 80;
     var BULLET_VELOCITY = 400;
 
     var GROUPS = {};
@@ -31,14 +31,14 @@ var BULLET;
     }
 
     window.addEventListener('game-ready', function(event) {
-    	console.log(event.detail);
+        console.log(event.detail);
     });
 
     function dispatchEvent(name, data) {
-    	data = data || {};
-    	var event = new CustomEvent('game-' + name, { 'detail': data });
-    	window.dispatchEvent(event);
-    	console.log('game-' + name);
+        data = data || {};
+        var event = new CustomEvent('game-' + name, { 'detail': data });
+        window.dispatchEvent(event);
+        console.log('game-' + name);
     }
 
     function preload() {
@@ -47,6 +47,9 @@ var BULLET;
         GAME.load.image('pl1', 'assets/pl1.png');
         GAME.load.image('pl2', 'assets/pl2.png');
         GAME.load.image('bu1', 'assets/bu1.png');
+        GAME.load.image('bu2', 'assets/bu2.png');
+        GAME.load.image('bu3', 'assets/bu3.png');
+        GAME.load.image('bu4', 'assets/bu4.png');
     }
 
     function create() {
@@ -59,7 +62,7 @@ var BULLET;
         GROUPS.bullets = GAME.add.group();
         GROUPS.bullets.enableBody = true;
 
-        setTimeout(function(){ dispatchEvent('ready') }, 1000);
+        setTimeout(function() { dispatchEvent('ready') }, 1000);
     }
 
     function createObstacles() {
@@ -117,11 +120,17 @@ var BULLET;
         }
     }
 
+    function randomBullet() {
+    	var max = 4;
+        return 'bu' + Math.floor(Math.random() * max + 1);
+    }
+
     function fireBullet(angle) {
         var pos = calcBulletPosition(angle);
         var player = STATUS.data.player;
+        var image = randomBullet();
 
-        BULLET = GROUPS.bullets.create(pos.x, pos.y, 'bu1');
+        BULLET = GROUPS.bullets.create(pos.x, pos.y, image);
         BULLET.height = BULLET.width = BULLET_SIZE;
         BULLET.body.collideWorldBounds = true;
         BULLET.body.bounce.set(1);
@@ -155,16 +164,16 @@ var BULLET;
                 offset.y = -(PLAYER_SIZE / 2) - separation;
                 break;
             case 45:
-                offset.y = -45;
-                offset.x = 45;
+                offset.y = -80;
+                offset.x = 80;
                 break;
             case 0:
             default:
                 offset.x = (PLAYER_SIZE / 2) + separation;
                 break;
             case -45:
-                offset.y = 45;
-                offset.x = 45;
+                offset.y = 80;
+                offset.x = 80;
                 break;
             case -90:
                 offset.y = (PLAYER_SIZE / 2) + separation;
