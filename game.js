@@ -13,7 +13,7 @@ var BULLET;
 (function() {
     'use strict';
     // Settings
-    var PLAYER_SIZE = 200;
+    var PLAYER_SIZE = 100;
     var PLAYER_EDGE_DISTANCE = 100;
     var BULLET_SIZE = 80;
     var BULLET_VELOCITY = 400;
@@ -44,8 +44,14 @@ var BULLET;
     function preload() {
         GAME.load.image('bg', 'assets/bg.png');
         GAME.load.image('ob1', 'assets/ob1.png');
-        GAME.load.image('pl1', 'assets/pl1.png');
-        GAME.load.image('pl2', 'assets/pl2.png');
+        GAME.load.image('ob2', 'assets/ob2.png');
+        GAME.load.image('ob3', 'assets/ob3.png');
+        GAME.load.image('ob4', 'assets/ob4.png');
+        GAME.load.image('ob5', 'assets/ob5.png');
+        GAME.load.image('ob6', 'assets/ob6.png');
+        GAME.load.image('ob7', 'assets/ob7.png');
+        GAME.load.image('pl1_5', 'assets/pl1_5.png');
+        GAME.load.image('pl2_5', 'assets/pl2_5.png');
         GAME.load.image('bu1', 'assets/bu1.png');
         GAME.load.image('bu2', 'assets/bu2.png');
         GAME.load.image('bu3', 'assets/bu3.png');
@@ -76,30 +82,52 @@ var BULLET;
         var obstacles = GAME.add.group();
         obstacles.enableBody = true;
 
-        var obstacle1 = obstacles.create(50, 50, 'ob1');
-        var obstacle2 = obstacles.create(350, 170, 'ob1');
-        var obstacle3 = obstacles.create(790, 490, 'ob1');
+        var obstacle1 = obstacles.create(310, 90, 'ob1');
+        var obstacle2 = obstacles.create(550, 104, 'ob2');
+        var obstacle3 = obstacles.create(760, 200, 'ob3');
+        var obstacle4 = obstacles.create(600, 360, 'ob4');
+        var obstacle5 = obstacles.create(450, 460, 'ob5');
+        var obstacle6 = obstacles.create(360, 260, 'ob6');
+        var obstacle7 = obstacles.create(530, 195, 'ob7');
 
         obstacles.forEach(function(obstacle) {
-            obstacle.body.mass = 3;
-            obstacle.body.bounce.set(1);
-            obstacle.scale.setTo(0.2, 0.2);
+           obstacle.body.mass = 3;
+           obstacle.body.bounce.set(1);
+           obstacle.height = 133;
+           obstacle.width = 200;
         });
+
+       obstacle6.height =  obstacle7.height =  200;
+       obstacle6.width =  obstacle7.width = 200;
+
+       obstacle5.height = 100;
+       obstacle5.width = 100;
 
         return obstacles;
     }
 
      function createLifes() {
         var lifes = GAME.add.group();
+        var y = 80;
+        var dis = 35;
+        var bdis = 10;
+        var bdis2 = 25;
 
-        var life1 = lifes.create(50, 50, 'li1');
-        var life2 = lifes.create(350, 170, 'li1');
-        var life3 = lifes.create(790, 490, 'li1');
-        var life4 = lifes.create(790, 490, 'li1');
-        var life5 = lifes.create(790, 490, 'li1');
+        var life1 = lifes.create(bdis + dis*2, y, 'li1');
+        var life2 = lifes.create(bdis + dis*3, y, 'li1');
+        var life3 = lifes.create(bdis + dis*4, y, 'li1');
+        var life4 = lifes.create(bdis + dis*5, y, 'li1');
+        var life5 = lifes.create(bdis + dis*6, y, 'li1');
+
+        var life6 = lifes.create(GAME.width - bdis2 - dis*2, y, 'li1');
+        var life7 = lifes.create(GAME.width - bdis2 - dis*3, y, 'li1');
+        var life8 = lifes.create(GAME.width - bdis2 - dis*4, y, 'li1');
+        var life9 = lifes.create(GAME.width - bdis2 - dis*5, y, 'li1');
+        var life10 = lifes.create(GAME.width - bdis2 - dis*6, y, 'li1');
 
         lifes.forEach(function(life) {
-            life.height();
+            life.height = 30;
+            life.width = 30;
         });
 
         return lifes;
@@ -114,8 +142,8 @@ var BULLET;
         var players = GAME.add.group();
         players.enableBody = true;
 
-        var player1 = players.create(x1, y, 'pl1');
-        var player2 = players.create(x2, y, 'pl2');
+        var player1 = players.create(x1, y, 'pl1_5');
+        var player2 = players.create(x2, y, 'pl2_5');
 
         players.forEach(function(player) {
             player.width = player.height = size;
