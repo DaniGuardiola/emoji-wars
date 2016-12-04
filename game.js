@@ -77,6 +77,7 @@ function nextTurn() {
         GAME.load.image('bu9', 'assets/bu9.png');
         GAME.load.image('co1', 'assets/co1.png');
         GAME.load.image('co2', 'assets/co2.png');
+        GAME.load.image('li1', 'assets/li1.png');
     }
 
     function create() {
@@ -88,6 +89,7 @@ function nextTurn() {
         GROUPS.players = createPlayers();
         GROUPS.compas = createCompas();
         GROUPS.bullets = GAME.add.group();
+        GROUPS.lifes = createLifes();
         GROUPS.bullets.enableBody = true;
 
         setTimeout(function() { dispatchEvent('ready') }, 1000);
@@ -123,6 +125,22 @@ function nextTurn() {
         });
 
         return obstacles;
+    }
+
+     function createLifes() {
+        var lifes = GAME.add.group();
+
+        var life1 = lifes.create(50, 50, 'li1');
+        var life2 = lifes.create(350, 170, 'li1');
+        var life3 = lifes.create(790, 490, 'li1');
+        var life4 = lifes.create(790, 490, 'li1');
+        var life5 = lifes.create(790, 490, 'li1');
+
+        lifes.forEach(function(life) {
+            life.height();
+        });
+
+        return lifes;
     }
 
     function createPlayers() {
