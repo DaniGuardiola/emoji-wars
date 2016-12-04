@@ -10,6 +10,23 @@ var STATUS = {
 };
 
 var BULLET;
+
+var turnIndex = 0;
+var turns = [{
+	n: 1,
+	angle: 45
+}, {
+	n: 2,
+	angle: -45
+}, {
+	n: 3,
+	angle: 0
+}]
+
+function nextTurn() {
+	return turns[turnIndex++];
+}
+
 (function() {
     'use strict';
     // Settings
@@ -17,6 +34,9 @@ var BULLET;
     var PLAYER_EDGE_DISTANCE = 100;
     var BULLET_SIZE = 80;
     var BULLET_VELOCITY = 400;
+    var COMPAS_HEIGHT = 490;
+    var COMPAS_WIDTH = 300;
+    var COMPAS_DISTANCE = 175;
 
     var GROUPS = {};
 
@@ -55,6 +75,8 @@ var BULLET;
         GAME.load.image('bu7', 'assets/bu7.png');
         GAME.load.image('bu8', 'assets/bu8.png');
         GAME.load.image('bu9', 'assets/bu9.png');
+        GAME.load.image('co1', 'assets/co1.png');
+        GAME.load.image('co2', 'assets/co2.png');
     }
 
     function create() {
@@ -64,10 +86,26 @@ var BULLET;
 
         GROUPS.obstacles = createObstacles();
         GROUPS.players = createPlayers();
+        GROUPS.compas = createCompas();
         GROUPS.bullets = GAME.add.group();
         GROUPS.bullets.enableBody = true;
 
         setTimeout(function() { dispatchEvent('ready') }, 1000);
+    }
+
+    function createCompas(p2) {
+        var compas = GAME.add.group();
+        var y = (GAME.height / 2) - (COMPAS_HEIGHT / 2);
+        var x1 = COMPAS_DISTANCE;
+        var x2 = GAME.width - COMPAS_DISTANCE - COMPAS_WIDTH;
+
+        if (!p2) var compas1 = compas.create(x1, y, 'co1');
+        if (p2) var compas2 = compas.create(x2, y, 'co2');
+
+        compas.forEach(function(aCompas) {
+            aCompas.height = COMPAS_HEIGHT;
+            aCompas.width = COMPAS_WIDTH;
+        });
     }
 
     function createObstacles() {
