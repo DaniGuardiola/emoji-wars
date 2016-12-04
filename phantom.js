@@ -72,7 +72,34 @@ bot.on('message', function(msg) {
   if (listenerCallback) listenerCallback(msg);
 });
 
+bot.on('callback_query', function(msg) {
+  console.log(`[DE🐞 QUERY] ${msg.data}`)
+  chatId = chatId || msg.chat.id;
+  const listenerCallback = botCheckListener(msg.text);
+  if (listenerCallback) listenerCallback(msg);
+  let message;
+  if (msg.data === '1') message = '3, 2, 1... Launch!'
+
+  bot.answerCallbackQuery(msg.id, message);
+});
+
 function botSendMsg(msg) {
+  return Promise.resolve(bot.sendMessage(chatId, msg));
+}
+
+function botSendOptions(msg, options, msgid) {
+  var opt = {
+        reply_markup: JSON.stringify({
+          inline_keyboard: [
+  [{ text: '👍', callback_data: '1' }, { text: 'Help', callback_data: '1' }]
+]
+        })
+    };
+
+  return Promise.resolve(bot.sendMessage(chatId, msg, opt));
+}
+
+function botSendArrows(msg) {
   return Promise.resolve(bot.sendMessage(chatId, msg));
 }
 
@@ -238,7 +265,7 @@ function waitPromise5s(data, ms = 2000) {
 
 function launchMock() {
   return botSendMsg('🎮 Welcome to Emoji Wars: Space! 🚀🚀🚀\nDo you want to start the game?')
-      .then(() => showOptions([ '👍' ]))
+      .then(() => showOptions([ '👍' , '🖕']))
       .then(botNextMsg) // Esperar mensaje
       .then(() => botSendMsg('This is your battlefield')) // Enviar mensaje
       .then(waitPromise1s) // Esperar (waitPromise es medio segundo, waitPromise1s/2s/5s)
@@ -250,8 +277,8 @@ function launchMock() {
       .then(() => botSendGif('mock/turn1.gif'));
 }
 
-return showOptions(options) {
-  return Promise.resolve();
+function showOptions(options) {
+  return botSendOptions("Type an option:", options);
 }
 
 function mockSendInitialImage() {
