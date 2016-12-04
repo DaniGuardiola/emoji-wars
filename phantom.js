@@ -84,12 +84,17 @@ function botSendMsg(msg) {
   return Promise.resolve(bot.sendMessage(chatId, msg));
 }
 
-function showOptions(msg, options, msgid) {
+function showOptions(msg, options, response) {
+  var opts = [];
+  for (var i = 0; i < options.length; i++) {
+    opts.push({
+      text: options[i],
+      callback_data: response
+    });
+  }
   var opt = {
         reply_markup: JSON.stringify({
-          inline_keyboard: [
-  [{ text: '👍', callback_data: '1' }, { text: 'Help', callback_data: '1' }]
-]
+          inline_keyboard: [opts]
         })
     };
 
