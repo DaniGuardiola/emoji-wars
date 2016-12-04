@@ -77,17 +77,14 @@ bot.on('callback_query', function(msg) {
   chatId = chatId || msg.chat.id;
   const listenerCallback = botCheckListener(msg.text);
   if (listenerCallback) listenerCallback(msg);
-  let message;
-  if (msg.data === '1') message = '3, 2, 1... Launch!'
-
-  bot.answerCallbackQuery(msg.id, message);
+  bot.answerCallbackQuery(msg.id, msg.data);
 });
 
 function botSendMsg(msg) {
   return Promise.resolve(bot.sendMessage(chatId, msg));
 }
 
-function botSendOptions(msg, options, msgid) {
+function showOptions(msg, options, msgid) {
   var opt = {
         reply_markup: JSON.stringify({
           inline_keyboard: [
@@ -275,10 +272,6 @@ function launchMock() {
       .then(botNextMsg)
       .then(() => botSendMsg("Good choice, this is the result of your turn:"))
       .then(() => botSendGif('mock/turn1.gif'));
-}
-
-function showOptions(options) {
-  return botSendOptions("Type an option:", options);
 }
 
 function mockSendInitialImage() {
