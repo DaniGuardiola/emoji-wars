@@ -113,7 +113,7 @@ function botSendPhoto(name) {
 }
 
 function botSendGif(name) {
-  name = 'mock/start.png';
+  name = 'mock/test.gif';
   return Promise.resolve(bot.sendDocument(chatId, './' + name));
 }
 
@@ -272,6 +272,7 @@ function launchMock() {
       .then(() => showOptions('Do you want to start the game with @damian?',
       [ '👍',  'Help', 'Play versus AI' ],
       '3, 2, 1... Launch!')) // Mostrar opciones
+      .then(botNextMsg) // Esperar mensaje
       .then(waitPromise2s) // Esperar mensaje
       .then(() => botSendMsg('Here is your battlefield, prepare your first move! ')) // Enviar mensaje
       .then(waitPromise1s) // Esperar (waitPromise es medio segundo, waitPromise1s/2s/5s)
