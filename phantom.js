@@ -272,18 +272,18 @@ function launchMock() {
       .then(waitPromise1s) // Esperar (waitPromise es medio segundo, waitPromise1s/2s/5s)
       .then(mockSendInitialImage) // Envía la imagen inicial
       .then(waitPromise2s)
-      .then(() => botSendMsg(“It's time to dance, @dani.\nWhere will you aim?”))
+      .then(() => botSendMsg("It's time to dance, @dani.\nWhere will you aim?"))
       .then(botNextMsg)
       .then(() => botSendMsg("Good choice, this is the result of your turn:"))
       .then(() => botSendMsg("OK:"))
-      .then(() => botSendGif('mock/turn1.gif'));
+      .then(() => botSendGif('mock/turn1.gif'))
       .then(waitPromise2s)
-      .then(() => botSendMsg('Happy? I hope so, because it's time for player 2 to attack!'))
+      .then(() => botSendMsg("Happy? I hope so, because it's time for player 2 to attack!"))
       .then(waitPromise1s)
-      .then(() => botSendMsg(“@DamianMC, where will you point your weapons?”))
+      .then(() => botSendMsg("@DamianMC, where will you point your weapons?"))
       .then(botNextMsg)
       .then(() => botSendMsg("Good move, let's see the results of your strike:"))
-      .then(() => botSendGif('mock/turn2.gif'));
+      .then(() => botSendGif('mock/turn2.gif'))
       .then(waitPromise2s)
       .then(() => botSendMsg('SECOND ROUND! \nHere is the actual state of your batterfield'))
       .then(waitPromise1s)
