@@ -18,12 +18,24 @@ var turns = [{
 	player: 1
 }, {
 	n: 2,
-	angle: -45,
+	angle: 45,
 	player: 2
 }, {
 	n: 3,
-	angle: 0,
+	angle: -45,
 	player: 1
+}, {
+	n: 4,
+	angle: -45,
+	player: 2
+}, {
+	n: 5,
+	angle: 45,
+	player: 1
+}, {
+	n: 5,
+	angle: -45,
+	player: 2
 }]
 
 function nextTurn() {
@@ -38,9 +50,13 @@ function nextTurn() {
     var BULLET_SIZE = 80;
     var BULLET_VELOCITY = 800;
     var BULLET_LIFESPAN = 5000;
-    var COMPAS_HEIGHT = 490;
-    var COMPAS_WIDTH = 300;
-    var COMPAS_DISTANCE = 175;
+    var BULLET_MASS = 5;
+    var COMPAS_HEIGHT = 290;
+    var COMPAS_WIDTH = 155;
+    var COMPAS_DISTANCE = 125;
+    var OBSTACLE_FRICTION = 999;
+    var OBSTACLE_DECELERATION = 2;
+    var OBSTACLE_BOUNCE = 0.5;
 
     var GROUPS = {};
 
@@ -75,7 +91,7 @@ function nextTurn() {
         GAME.load.image('ob6', 'assets/ob6.png');
         GAME.load.image('ob7', 'assets/ob7.png');
         GAME.load.image('pl1_5', 'assets/pl1_5.png');
-        GAME.load.image('pl2_5', 'assets/pl2_5.png');
+        GAME.load.image('pl2_5', 'assets/pl2_0.png');
         GAME.load.image('bu1', 'assets/bu1.png');
         GAME.load.image('bu2', 'assets/bu2.png');
         GAME.load.image('bu3', 'assets/bu3.png');
@@ -99,7 +115,7 @@ function nextTurn() {
 
         GROUPS.obstacles = createObstacles();
         GROUPS.players = createPlayers();
-        GROUPS.compas = createCompas();
+        // GROUPS.compas = createCompas();
         GROUPS.bullets = GAME.add.group();
         GROUPS.lifes = createLifes();
         GROUPS.bullets.enableBody = true;
@@ -136,10 +152,11 @@ function nextTurn() {
         var obstacle7 = obstacles.create(530, 195, 'ob7');
 
         obstacles.forEach(function(obstacle) {
-           obstacle.body.bounce.set(1);
            obstacle.height = 133;
            obstacle.width = 200;
-        	obstacle.body.collideWorldBounds = true;
+           // obstacle.body.collideWorldBounds = true;
+           obstacle.body.friction = OBSTACLE_FRICTION;
+           obstacle.body.bounce.set(OBSTACLE_BOUNCE);
         });
 
        obstacle1.body.mass = 2.253;
@@ -172,11 +189,13 @@ function nextTurn() {
         var life4 = lifes.create(bdis + dis*5, y, 'li1');
         var life5 = lifes.create(bdis + dis*6, y, 'li1');
 
+        /*
         var life6 = lifes.create(GAME.width - bdis2 - dis*2, y, 'li1');
         var life7 = lifes.create(GAME.width - bdis2 - dis*3, y, 'li1');
         var life8 = lifes.create(GAME.width - bdis2 - dis*4, y, 'li1');
         var life9 = lifes.create(GAME.width - bdis2 - dis*5, y, 'li1');
         var life10 = lifes.create(GAME.width - bdis2 - dis*6, y, 'li1');
+		*/
 
         lifes.forEach(function(life) {
             life.height = 30;
@@ -249,10 +268,8 @@ function nextTurn() {
             var x = obstacle.body.velocity.x;
             var y = obstacle.body.velocity.y;
 
-            var change = 5;
-
-            var xchange = x*change/100;
-            var ychange = y*change/100;
+            var xchange = x*OBSTACLE_DECELERATION/100;
+            var ychange = y*OBSTACLE_DECELERATION/100;
 
             if((x - xchange) > 0){
                 obstacle.body.velocity.x = x - xchange;  
@@ -282,7 +299,8 @@ function nextTurn() {
         BULLET = GROUPS.bullets.create(pos.x, pos.y, image);
         BULLET.height = BULLET.width = BULLET_SIZE;
         BULLET.body.collideWorldBounds = true;
-        BULLET.body.bounce.set(1);
+        BULLET.body.bounce.set(0.5);
+        BULLET.body.mass = BULLET_MASS;
         BULLET.lifespan = BULLET_LIFESPAN;
 
         if ([45, 0, -45].indexOf(angle) > -1) {
