@@ -77,13 +77,14 @@ function botSendMsg(msg) {
 }
 
 function botSendPhoto(name) {
+  name = 'mock/start.png';
   console.log('name');
   console.log('./' + name);
   return Promise.resolve(bot.sendPhoto(chatId, './' + name));
 }
 
 function botSendGif(name) {
-  name = 'test.gif';
+  name = 'mock/start.png';
   return Promise.resolve(bot.sendDocument(chatId, './' + name));
 }
 
@@ -237,25 +238,43 @@ function waitPromise5s(data, ms = 2000) {
 }
 
 function launchMock() {
+  // START
   return botSendMsg('🎮 Welcome to Emoji Wars: Space! 🚀🚀🚀\nDo you want to start the game?')
-      .then(() => showOptions([ '👍' ]))
+      .then(() => showOptions([ '👍',  'invite friend', 'play alone', 'tutorial' ])) // Mostrar opciones
       .then(botNextMsg) // Esperar mensaje
-      .then(() => botSendMsg('This is your battlefield')) // Enviar mensaje
+      .then(() => botSendMsg('Here is your battlefield, prepare your first move! ')) // Enviar mensaje
       .then(waitPromise1s) // Esperar (waitPromise es medio segundo, waitPromise1s/2s/5s)
       .then(mockSendInitialImage) // Envía la imagen inicial
       .then(waitPromise2s)
-      .then(() => botSendMsg("It's your turn, @dani.\nWhere will you aim?"))
+      .then(() => botSendMsg(“It's time to dance, @dani.\nWhere will you aim?”))
       .then(botNextMsg)
       .then(() => botSendMsg("Good choice, this is the result of your turn:"))
+      .then(() => botSendMsg("OK:"))
       .then(() => botSendGif('mock/turn1.gif'));
+      .then(waitPromise2s)
+      .then(() => botSendMsg('Happy? I hope so, because it's time for player 2 to attack!'))
+      .then(waitPromise1s)
+      .then(() => botSendMsg(“@DamianMC, where will you point your weapons?”))
+      .then(botNextMsg)
+      .then(() => botSendMsg("Good move, let's see the results of your strike:"))
+      .then(() => botSendGif('mock/turn2.gif'));
+      .then(waitPromise2s)
+      .then(() => botSendMsg('SECOND ROUND! \nHere is the actual state of your batterfield'))
+      .then(waitPromise1s)
+      .then(() => botSendPhoto('mock/round2.png'));
+  // END
 }
 
-return showOptions(options) {
+function showOptions(options) {
+  return Promise.resolve();
+}
+
+function showArrows(options) {
   return Promise.resolve();
 }
 
 function mockSendInitialImage() {
-  return botSendPhoto('./mock/start.png');
+  return botSendPhoto('mock/start.png');
 }
 
 
