@@ -91,7 +91,7 @@ function nextTurn() {
         GAME.load.image('ob6', 'assets/ob6.png');
         GAME.load.image('ob7', 'assets/ob7.png');
         GAME.load.image('pl1_5', 'assets/pl1_5.png');
-        GAME.load.image('pl2_5', 'assets/pl2_0.png');
+        GAME.load.image('pl2_5', 'assets/pl2_5.png');
         GAME.load.image('bu1', 'assets/bu1.png');
         GAME.load.image('bu2', 'assets/bu2.png');
         GAME.load.image('bu3', 'assets/bu3.png');
@@ -189,13 +189,11 @@ function nextTurn() {
         var life4 = lifes.create(bdis + dis*5, y, 'li1');
         var life5 = lifes.create(bdis + dis*6, y, 'li1');
 
-        /*
         var life6 = lifes.create(GAME.width - bdis2 - dis*2, y, 'li1');
         var life7 = lifes.create(GAME.width - bdis2 - dis*3, y, 'li1');
         var life8 = lifes.create(GAME.width - bdis2 - dis*4, y, 'li1');
         var life9 = lifes.create(GAME.width - bdis2 - dis*5, y, 'li1');
         var life10 = lifes.create(GAME.width - bdis2 - dis*6, y, 'li1');
-		*/
 
         lifes.forEach(function(life) {
             life.height = 30;

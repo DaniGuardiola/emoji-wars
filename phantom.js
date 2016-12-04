@@ -131,14 +131,12 @@ function showArrows2() {
 }
 
 function botSendPhoto(name) {
-  name = 'mock/start.png';
   console.log('name');
   console.log('./' + name);
   return Promise.resolve(bot.sendPhoto(chatId, './' + name));
 }
 
 function botSendGif(name) {
-  name = 'mock/test.gif';
   return Promise.resolve(bot.sendDocument(chatId, './' + name));
 }
 
@@ -303,14 +301,13 @@ function launchMock() {
       .then(waitPromise1s) // Esperar (waitPromise es medio segundo, waitPromise1s/2s/5s)
       .then(mockSendInitialImage) // Envía la imagen inicial
       .then(waitPromise2s)
-      .then(() => botSendMsg("It's time to dance, @dani.\nWhere will you aim?"))
+      .then(() => botSendMsg("It's time to dance, @dani_disrupt.\nWhere will you aim?"))
       .then(showArrows)
       .then(botNextMsg)
-      .then(() => botSendMsg("Good choice, this is the result of your turn:"))
-      .then(() => botSendMsg("OK:"))
+      .then(() => botSendMsg("Good choice, let´s see the damage:"))
       .then(() => botSendGif('mock/turn1.gif'))
       .then(waitPromise2s)
-      .then(() => botSendMsg("Happy? I hope so, because it's time for player 2 to attack! \n@DamianMC have a look at your scenery "))
+      .then(() => botSendMsg("Happy? I hope so, because it's time for player 2 to attack! \n@DamianMC have a look at the battlefield."))
       .then(waitPromise1s)
       .then(() => botSendPhoto('mock/round2.png'))
       .then(waitPromise2s)
@@ -320,32 +317,32 @@ function launchMock() {
       .then(() => botSendMsg("Good move, let's see the results of your strike:"))
       .then(() => botSendGif('mock/turn2.gif'))
       .then(waitPromise2s)
-      .then(() => botSendMsg('SECOND ROUND! \nHere is the actual state of your battlefield'))
+      .then(() => botSendMsg('SECOND ROUND! \nHere is the current state of your battlefield'))
       .then(waitPromise1s)
       .then(() => botSendPhoto('mock/round3.png'))
       .then(waitPromise2s)
-      .then(() => botSendMsg("Ok. @dani, you better hit him now"))
+      .then(() => botSendMsg("Ok. @dani_disrupt, you better hit him now"))
       .then(showArrows)
       .then(botNextMsg)
       .then(() => botSendMsg("Do you really think you managed to hit him? \nLet's find out..."))
       .then(waitPromise1s)
       .then(() => botSendGif('mock/turn3.gif'))
       .then(waitPromise2s)
-      .then(() => botSendMsg("Impressed @DamianMC? Show us what you can do. \nBut have a look to your terrain first:"))
+      .then(() => botSendMsg("Impressed @DamianMC? Show us what you can do. \nBut have a look at your terrain first:"))
       .then(waitPromise1s)
       .then(() => botSendPhoto('mock/round4.png'))
       .then(waitPromise2s)
       .then(showArrows2)
       .then(botNextMsg)
-      .then(() => botSendMsg("No coments... \nLet's better see what you have done..."))
+      .then(() => botSendMsg("No comments... \nWe´d better see what you´ve done..."))
       .then(waitPromise1s)
       .then(() => botSendGif('mock/turn4.gif'))
       .then(waitPromise2s)
-      .then(() => botSendMsg('THIIIIRD ROUND!!! \nHere is the actual state of your playground'))
+      .then(() => botSendMsg('THIIIIRD ROUND!!! \nHere is your playground'))
       .then(waitPromise1s)
       .then(() => botSendPhoto('mock/round5.png'))
       .then(waitPromise2s)
-      .then(() => botSendMsg("@dani, have you thought about shooting blind this time?"))
+      .then(() => botSendMsg("@dani_disrupt, have you thought about shooting blind this time?"))
       .then(showArrows)
       .then(botNextMsg)
       .then(() => botSendMsg("Whow! Amazing game! \nYou both deserve to watch it again and again and again..."))
@@ -358,10 +355,11 @@ function launchMock() {
       .then(waitPromise2s)
       .then(showArrows2)
       .then(botNextMsg)
-      .then(() => botSendMsg("Oh no, I cant believe you gave up so soon!  \nHas been a great game, now let´s celebrate @dani epic victory!!!"))
+      .then(() => botSendMsg("Oh no, I can´t believe you gave up so soon!  \nIt has been a great game, now let´s celebrate @dani_disrupt's epic victory!!!"))
       .then(waitPromise1s)
-      .then(() => botSendPhoto('mock/Celebration.png'));
-  // END
+      .then(() => botSendPhoto('mock/end.png'));
+
+      // END
 }
 
 function mockSendInitialImage() {
