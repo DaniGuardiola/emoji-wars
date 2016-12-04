@@ -72,7 +72,34 @@ bot.on('message', function(msg) {
   if (listenerCallback) listenerCallback(msg);
 });
 
+bot.on('callback_query', function(msg) {
+  console.log(`[DE🐞 QUERY] ${msg.data}`)
+  chatId = chatId || msg.chat.id;
+  const listenerCallback = botCheckListener(msg.text);
+  if (listenerCallback) listenerCallback(msg);
+  let message;
+  if (msg.data === '1') message = '3, 2, 1... Launch!'
+
+  bot.answerCallbackQuery(msg.id, message);
+});
+
 function botSendMsg(msg) {
+  return Promise.resolve(bot.sendMessage(chatId, msg));
+}
+
+function botSendOptions(msg, options, msgid) {
+  var opt = {
+        reply_markup: JSON.stringify({
+          inline_keyboard: [
+  [{ text: '👍', callback_data: '1' }, { text: 'Help', callback_data: '1' }]
+]
+        })
+    };
+
+  return Promise.resolve(bot.sendMessage(chatId, msg, opt));
+}
+
+function botSendArrows(msg) {
   return Promise.resolve(bot.sendMessage(chatId, msg));
 }
 
@@ -239,9 +266,11 @@ function waitPromise5s(data, ms = 2000) {
 
 function launchMock() {
   // START
-  return botSendMsg('🎮 Welcome to Emoji Wars: Space! 🚀🚀🚀\nDo you want to start the game?')
-      .then(() => showOptions([ '👍',  'invite friend', 'play alone', 'tutorial' ])) // Mostrar opciones
-      .then(botNextMsg) // Esperar mensaje
+  return botSendMsg('🎮 Welcome to Emoji Wars: Space! 🚀🚀🚀')
+      .then(() => showOptions('Do you want to start the game with @damian?',
+      [ '👍',  'Help', 'Play versus AI' ],
+      '3, 2, 1... Launch!')) // Mostrar opciones
+      .then(waitPromise2s) // Esperar mensaje
       .then(() => botSendMsg('Here is your battlefield, prepare your first move! ')) // Enviar mensaje
       .then(waitPromise1s) // Esperar (waitPromise es medio segundo, waitPromise1s/2s/5s)
       .then(mockSendInitialImage) // Envía la imagen inicial
@@ -269,8 +298,13 @@ function showOptions(options) {
   return Promise.resolve();
 }
 
+<<<<<<< HEAD
 function showArrows(options) {
   return Promise.resolve();
+=======
+function showOptions(options) {
+  return botSendOptions("Type an option:", options);
+>>>>>>> 1545ebc0c436a76582a1a1cf694335d64ce65824
 }
 
 function mockSendInitialImage() {
